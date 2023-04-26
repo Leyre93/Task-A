@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery AJAX Example</title>
+    <!-- Include the jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div id="result"></div>
+
+    <script>
+        // Perform the AJAX request
+        $.ajax({
+            url: 'https://jsonplaceholder.typicode.com/posts',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // If the request was successful, handle the response
+                console.log(data);
+                var resultHTML = '<ul>';
+                data.forEach(function(post) {
+                    resultHTML += '<li>[' + post.id + '] ' + post.title + '</li>';
+                });
+                resultHTML += '</ul>';
+                $('#result').html(resultHTML);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // If the request failed, handle the error
+                console.error('Request failed. Status: ' + textStatus + ', Error: ' + errorThrown);
+            }
+        });
+    </script>
+</body>
+</html>
