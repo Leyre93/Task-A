@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Styling for the content -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -33,33 +34,40 @@
             text-align: left;
         }
     </style>
+    <!-- Include the jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
-<h2>Using the XMLHttpRequest Object</h2>
+<h2>Using the jQuery AJAX Method</h2>
 
-<button type="button" onclick="loadData()">Load Data</button>
+<!-- Button to trigger data loading -->
+<button type="button">Load Data</button>
+<!-- Table where the data will be displayed -->
 <table id="result"></table>
 
 <script>
-function loadData() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var data = JSON.parse(this.responseText);
-            displayData(data);
+// Attach a click event listener to the button
+$("button").click(function() {
+    // Perform the AJAX request
+    $.ajax({
+        url: "https://jsonplaceholder.typicode.com/posts",
+        dataType: "json",
+        success: function(result) {
+            // If the request was successful, display the data
+            displayData(result);
         }
-    };
-    xhttp.open("GET", "https://jsonplaceholder.typicode.com/posts", true);
-    xhttp.send();
-}
+    });
+});
 
+// Function to display the data in an HTML table
 function displayData(data) {
     var resultHTML = '<tr><th>ID</th><th>Title</th></tr>';
     data.forEach(function(post) {
         resultHTML += '<tr><td>' + post.id + '</td><td>' + post.title + '</td></tr>';
     });
-    document.getElementById("result").innerHTML = resultHTML;
+    // Update the table with the fetched data
+    $("#result").html(resultHTML);
 }
 </script>
 
